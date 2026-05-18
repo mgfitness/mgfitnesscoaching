@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marzia Gherardi · Fitness Coach</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f0eb;
+    --pink: #e8507a;
+    --pink-light: #f2a0b8;
+    --gold: #c9a84c;
+    --muted: #8a7e76;
+    --card-bg: #141414;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.35;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.4rem 3rem;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+    opacity: 0.9;
+  }
+
+  .nav-cta {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--pink);
+    text-decoration: none;
+    border: 1px solid var(--pink);
+    padding: 0.5rem 1.2rem;
+    transition: all 0.3s;
+  }
+  .nav-cta:hover { background: var(--pink); color: var(--black); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 8rem 2rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(232,80,122,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 2rem;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  /* LOGO IMAGE */
+  .logo-img {
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 2.5rem;
+    display: block;
+    animation: fadeUp 0.8s 0.1s ease both;
+    box-shadow: 0 0 60px rgba(232,80,122,0.3);
+    border: 2px solid rgba(232,80,122,0.25);
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.3rem;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--pink);
+  }
+
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.8s 0.3s ease both;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-desc {
+    max-width: 520px;
+    font-size: 0.95rem;
+    color: rgba(245,240,235,0.65);
+    margin-bottom: 3rem;
+    animation: fadeUp 0.8s 0.4s ease both;
+    line-height: 1.8;
+  }
+
+  .btn-group {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeUp 0.8s 0.5s ease both;
+  }
+
+  .btn-primary {
+    background: var(--pink);
+    color: var(--black);
+    text-decoration: none;
+    padding: 0.9rem 2.2rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #d43d6b; transform: translateY(-2px); }
+
+  .btn-outline {
+    border: 1px solid rgba(245,240,235,0.3);
+    color: var(--white);
+    text-decoration: none;
+    padding: 0.9rem 2.2rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--white); transform: translateY(-2px); }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem; left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    animation: fadeUp 1s 1s ease both;
+  }
+  .scroll-hint span { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+  .scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--muted), transparent);
+    animation: scrollLine 2s 1.5s ease infinite;
+  }
+
+  /* ── MANIFESTO ── */
+  .section { padding: 7rem 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .container-narrow { max-width: 720px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+
+  .manifesto {
+    background: linear-gradient(135deg, #111 0%, #0d0d0d 100%);
+    border-top: 1px solid rgba(232,80,122,0.2);
+    border-bottom: 1px solid rgba(232,80,122,0.2);
+  }
+
+  .manifesto-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .manifesto-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 300;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+
+  .manifesto-quote strong {
+    color: var(--pink);
+    font-weight: 400;
+  }
+
+  .manifesto-body p {
+    font-size: 0.92rem;
+    color: rgba(245,240,235,0.7);
+    margin-bottom: 1.2rem;
+    line-height: 1.85;
+  }
+
+  .manifesto-body p:last-child { margin-bottom: 0; }
+
+  .badge-certified {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    border: 1px solid rgba(201,168,76,0.4);
+    padding: 0.5rem 1rem;
+    margin-top: 1.5rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* ── FOR WHO ── */
+  .forwho { background: var(--black); }
+
+  .forwho-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 3rem;
+  }
+
+  .forwho-card {
+    background: var(--card-bg);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s;
+  }
+  .forwho-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--pink);
+    transform: scaleX(0);
+    transition: transform 0.4s;
+  }
+  .forwho-card:hover::before { transform: scaleX(1); }
+  .forwho-card:hover { background: #1a1a1a; }
+
+  .forwho-card.no {
+    opacity: 0.6;
+  }
+  .forwho-card.no::before { background: var(--muted); }
+
+  .card-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .forwho-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.02em;
+  }
+
+  .forwho-card p {
+    font-size: 0.88rem;
+    color: rgba(245,240,235,0.6);
+    line-height: 1.75;
+  }
+
+  /* ── PROCESS ── */
+  .process { background: #0d0d0d; }
+
+  .process-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .process-subtitle {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+    max-width: 500px;
+    margin: 0 auto 4rem;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+  }
+
+  .step {
+    background: var(--card-bg);
+    padding: 2.5rem;
+    position: relative;
+    transition: background 0.3s;
+  }
+  .step:hover { background: #181818; }
+
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    font-weight: 300;
+    color: rgba(232,80,122,0.15);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.03em;
+  }
+
+  .step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 0.8rem;
+    color: var(--pink-light);
+  }
+
+  .step p {
+    font-size: 0.87rem;
+    color: rgba(245,240,235,0.6);
+    line-height: 1.8;
+    margin-bottom: 0.6rem;
+  }
+
+  .step-detail {
+    font-size: 0.78rem;
+    color: rgba(232,80,122,0.7);
+    letter-spacing: 0.05em;
+    margin-top: 0.5rem;
+  }
+
+  /* ── CTA BAND ── */
+  .cta-band {
+    background: var(--pink);
+    padding: 5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-band::before {
+    content: 'M|G';
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20rem;
+    font-weight: 300;
+    color: rgba(0,0,0,0.06);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    letter-spacing: -0.05em;
+  }
+
+  .cta-band h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 300;
+    color: var(--black);
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .cta-band p {
+    color: rgba(0,0,0,0.65);
+    font-size: 0.95rem;
+    max-width: 480px;
+    margin: 0 auto 2.5rem;
+    position: relative;
+  }
+
+  .btn-dark {
+    background: var(--black);
+    color: var(--white);
+    text-decoration: none;
+    padding: 1rem 2.8rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: all 0.3s;
+    display: inline-block;
+    position: relative;
+  }
+  .btn-dark:hover { background: #222; transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black);
+    border-top: 1px solid rgba(245,240,235,0.08);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    color: var(--white);
+  }
+
+  .footer-sub {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+
+  .social-link {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .social-link:hover { color: var(--pink); }
+
+  .footer-copy {
+    font-size: 0.72rem;
+    color: rgba(245,240,235,0.25);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollLine {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.3); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .manifesto-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .forwho-grid { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+    .manifesto-quote { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Marzia Gherardi</a>
+  <a href="https://tally.so/r/QK861k" target="_blank" class="nav-cta">Inizia qui</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="hero-tag">Fitness Coach · Project Invictus Certified</span>
+
+  <img src="logo-marzia.jpg" alt="Marzia Gherardi Fitness Coach" class="logo-img">
+
+  <h1>Allena<em>mento</em><br>su misura.</h1>
+  <p class="hero-sub">Ogni corpo è diverso. Ogni percorso inizia dall'ascolto.</p>
+  <p class="hero-desc">
+    Un metodo olistico e personalizzato, costruito sulla tua realtà quotidiana — non su un ideale irraggiungibile. Perché la costanza, non la perfezione, fa la differenza.
+  </p>
+  <div class="btn-group">
+    <a href="https://tally.so/r/QK861k" target="_blank" class="btn-primary">Inizia qui</a>
+    <a href="#come-lavoro" class="btn-outline">Come lavoro</a>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scopri</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="section manifesto">
+  <div class="manifesto-inner">
+    <div>
+      <span class="section-label">Il mio metodo</span>
+      <p class="manifesto-quote">
+        Parto da <strong>dove sei oggi</strong>, non da come "dovresti" essere.
+      </p>
+      <span class="badge-certified">✦ Coach Certificata Project Invictus</span>
+    </div>
+    <div class="manifesto-body reveal">
+      <p>
+        La mia formazione è in continua evoluzione: ho approfondito il metodo attraverso corsi e specializzazioni con professionisti del settore, con un focus specifico sull'<strong>allenamento al femminile</strong> e sulla programmazione avanzata.
+      </p>
+      <p>
+        Il mio approccio è <strong>olistico</strong>: l'allenamento non è solo esercizio fisico, ma uno strumento per migliorare lo stile di vita nel suo insieme — adattato ai tuoi ritmi, alle tue energie, alla tua realtà.
+      </p>
+      <p>
+        Io ti seguo, ti guido e ti supporto con professionalità ed empatia. Tu ti presenti con impegno. I risultati nascono da questa collaborazione.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- FOR WHO -->
+<section class="section forwho">
+  <div class="container">
+    <span class="section-label reveal">Per chi è adatto</span>
+    <div class="forwho-grid">
+      <div class="forwho-card reveal">
+        <span class="card-icon">✓</span>
+        <h3>Questo percorso fa per te se...</h3>
+        <p>Cerchi un programma serio, umano e sostenibile — costruito nel tempo, basato su competenza e consapevolezza. Vuoi progredire rispettando la tua vita reale, non una versione idealizzata di essa.</p>
+      </div>
+      <div class="forwho-card no reveal">
+        <span class="card-icon">✗</span>
+        <h3>Probabilmente non fa per te se...</h3>
+        <p>Cerchi scorciatoie, promesse irrealistiche o risultati in pochi giorni. Il mio lavoro si basa su costanza, fiducia reciproca e un processo graduale — non su soluzioni rapide.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section process" id="come-lavoro">
+  <div class="container">
+    <h2 class="process-title reveal">Il tuo percorso,<br><em style="font-style:italic; color: var(--pink-light)">dalla A alla Z</em></h2>
+    <p class="process-subtitle reveal">Il coaching è personalizzato al 100%. Nessun protocollo standard — solo un sistema costruito su di te.</p>
+
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div class="step-title">Analisi & Anamnesi</div>
+        <p>Tutto parte da un questionario approfondito: storia personale, obiettivi, foto, stile di vita. Prima di costruire il piano, ti conosco davvero.</p>
+        <p class="step-detail">✦ Esclusiva Gold: call conoscitiva dedicata prima di iniziare</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">02</div>
+        <div class="step-title">Il tuo Piano d'Azione</div>
+        <p>Entro 7 giorni lavorativi ricevi il programma su misura in formato PDF e Google Drive. Include video tutorial per ogni esercizio, indicazioni su riscaldamento e mobilità.</p>
+        <p class="step-detail">✦ Gold: consigli alimentari e indicazioni sull'integrazione</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">03</div>
+        <div class="step-title">Supporto Tecnico via WhatsApp</div>
+        <p>Mi invii i video delle tue esecuzioni, io li analizzo uno ad uno e ti do feedback tecnico preciso per evitare infortuni e migliorare la qualità del movimento.</p>
+        <p class="step-detail">✦ Gold: risposta prioritaria entro 24 ore</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">04</div>
+        <div class="step-title">Monitoraggio & Evoluzione</div>
+        <p>Ogni programmazione dura 6–8 settimane e si evolve con te. Check intermedi ogni 3 settimane per adattare il percorso in tempo reale.</p>
+        <p class="step-detail">✦ Gold: check ogni 2 settimane + call a ogni cambio programma</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band" id="contatto">
+  <h2>Pronta a iniziare?</h2>
+  <p>Scrivimi su Instagram o WhatsApp per scoprire quale percorso è più adatto a te. La prima conversazione non impegna a nulla. oppure clicca "inizia qui" e candidati al percorso compilando il form</p>
+  <div style="display:flex; flex-direction:column; align-items:center; gap:1.5rem; position:relative;">
+  <a href="https://tally.so/r/QK861k" target="_blank" class="btn-dark" style="font-size:0.9rem; padding:1.1rem 3.2rem; letter-spacing:0.2em;">Inizia qui</a>
+  <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+    <a href="https://www.instagram.com/marziagherardi_pt?igsh=MXNteGE1cHcxMzFmdA==" target="_blank" class="btn-dark">
+      <svg style="vertical-align:middle; margin-right:0.5rem;" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      Instagram
+    </a>
+    <a href="https://wa.me/393517806254?text=Ciao%20Marzia!%20Ho%20visto%20il%20tuo%20sito%20e%20vorrei%20sapere%20di%20pi%C3%B9%20sul%20tuo%20coaching." target="_blank" class="btn-dark" style="background:#25D366;">
+      <svg style="vertical-align:middle; margin-right:0.5rem;" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp
+    </a>
+  </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Marzia Gherardi</div>
+  <div class="footer-sub">Fitness Coach · Project Invictus Certified</div>
+  <div class="social-links">
+    <a href="https://www.instagram.com/marziagherardi_pt?igsh=MXNteGE1cHcxMzFmdA==" target="_blank" class="social-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      @marziagherardi_pt
+    </a>
+    <a href="https://wa.me/393517806254" target="_blank" class="social-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      +39 351 780 6254
+    </a>
+  </div>
+  <p class="footer-copy">© 2025 Marzia Gherardi Fitness Coach · Tutti i diritti riservati</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Smooth nav background
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    nav.style.background = window.scrollY > 80
+      ? 'rgba(10,10,10,0.97)'
+      : 'linear-gradient(to bottom, rgba(10,10,10,0.95), transparent)';
+  });
+</script>
+</body>
+</html>
